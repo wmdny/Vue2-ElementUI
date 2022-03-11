@@ -1,31 +1,16 @@
 <template>
-  <div>
-    <h1>测试界面:Home</h1>
-    <div>count: {{ count }}</div>
-    <button @click="addCount">+1</button>
+  <div class="home pt_20 t_center fontsize_20">
+    {{message}}
   </div>
 </template>
-
 <script>
-  export default {
-    data() {
-      return {}
-    },
-    computed: {
-      count() {
-        return this.$store.getters.count;
-      },
-    },
-    mounted: function () {
-    
-    },
-    methods: {
-      addCount() {
-        this.$store.commit("addCount", 1);
-      },
-    },
-  };
+export default {
+  name: "Home",
+  components: {},
+  data() {
+    return {
+      message:'Welcome to there'
+    };
+  },
+};
 </script>
-<style scoped>
-
-</style>

@@ -4,10 +4,10 @@ switch (process.env.NODE_ENV) {
         baseApi = '/api' // 开发环境url
         break
     case 'product':
-        baseApi = '' // 生产环境url
+        baseApi = '/api' // 生产环境url
         break
     default:
-        baseApi = ''
+        baseApi = '/api'
         break
 }
 

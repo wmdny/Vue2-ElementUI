@@ -1,112 +1,96 @@
 <template>
-    <div class="login" clearfix>
-        <div class="login-wrap">
-            <el-row justify="center" type="flex">
-                <el-form :model="user" label-width="80px" ref="loginForm" status-icon>
-                    <h3>登录</h3>
-                    <hr>
-                    <el-form-item label="用户名" prop="username">
-                        <el-input placeholder="请输入用户名" prefix-icon v-model="user.username"></el-input>
-                    </el-form-item>
-                    <el-form-item id="password" label="密码" prop="password">
-                        <el-input placeholder="请输入密码" show-password v-model="user.password"></el-input>
-                    </el-form-item>
-                    <router-link to="/">找回密码</router-link>
-                    <router-link to="/register">注册账号</router-link>
-                    <el-form-item>
-                        <el-button @click="doLogin()" icon="el-icon-upload" type="primary">登 录</el-button>
-                    </el-form-item>
-                </el-form>
-            </el-row>
-        </div>
+  <div class="login h_100 flex flex_justify_center">
+    <div class="inner_box">
+      <div class="title c_fff bold t_center">系统登录</div>
+      <el-form ref="form" :model="param" :rules="rules">
+        <el-form-item prop="userName">
+          <el-input
+            v-model="param.userName"
+            placeholder="用户名"
+            prefix-icon="el-icon-user"
+          />
+        </el-form-item>
+        <el-form-item prop="passwrod">
+          <el-input
+            type="passwrod"
+            prefix-icon="el-icon-lock"
+            v-model="param.password"
+            placeholder="密码"
+            show-password
+          />
+        </el-form-item>
+        <el-button
+          class="w_100"
+          type="primary"
+          :loading="loginLoading"
+          @click="login('form')"
+          >登录</el-button
+        >
+      </el-form>
     </div>
+  </div>
 </template>
-
 <script>
-    import {login} from "@/api/home";
-    
-    export default {
-        name: "Login",
-        data() {
-            return {
-                user: {
-                    username: "",
-                    password: ""
-                },
-            };
-        },
-        created() {
-        },
-        methods: {
-            doLogin() {
-                if (!this.user.username) {
-                    return this.$message.error("请输入用户名！");
-                } else if (!this.user.password) {
-                    return this.$message.error("请输入密码！");
-                } else {
-                    //校验用户名和密码是否正确;
-                    // this.$router.push({ path: "/personal" });
-                    login({
-                        username: this.user.username,
-                        password: this.user.password
-                    }).then((data) => {
-                        this.$store.commit('setToken', data.user);
-                        this.$message.success("登录成功");
-                        this.$router.push({path: "/about"});
-                    })
-                }
-            }
-        }
+export default {
+  name: "Login",
+  data() {
+    return {
+      param: {
+        userName: "",
+        password: "",
+      },
+      rules: {
+        userName: [{ required: true, message: "请输入用户名", trigger: blur }],
+        password: [{ required: true, message: "请输入密码", trigger: blur }],
+      },
+      loginLoading: false,
     };
+  },
+  created() {},
+  methods: {
+    login(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.loginLoading = true;
+          this.$store.dispatch("user/login", this.param).then(() => {
+            this.loginLoading = false;
+            this.$router.push({name: "Home"});
+          }).finally(() => {
+            this.loginLoading = false;
+          });
+        } else {
+          return false;
+        }
+      });
+    },
+  },
+};
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-    .login {
-        width: 100%;
-        height: 740px;
-        /*background: url("@/assets/images/bg.jpg") no-repeat;*/
-        background-size: contain;
-        overflow: hidden;
+<style lang="scss" scoped>
+.login {
+  background-color: #2d3a4b;
+  .inner_box {
+    width: 450px;
+    margin-top: 220px;
+    .title {
+      padding-bottom: 40px;
+      font-size: 30px;
     }
-    
-    .login-wrap {
-        /*background: url("@/assets/images/login_bg.png") no-repeat;*/
-        background-size: cover;
-        width: 400px;
-        height: 300px;
-        margin: 215px auto;
-        overflow: hidden;
-        padding-top: 10px;
-        line-height: 40px;
+    /deep/ .el-form-item {
+        background-color: #283443;
+        border: 1px solid #434c58;
+        border-radius: 4px;
+        .el-input {
+          input{
+            height: 50px;
+            padding-right: 30px;
+            font-size: 16px;
+            background-color: transparent;
+            border: none;
+            color: #fff;
+          }
+        }
     }
-    
-    #password {
-        margin-bottom: 5px;
-    }
-    
-    h3 {
-        color: #0babeab8;
-        font-size: 24px;
-    }
-    
-    hr {
-        background-color: #444;
-        margin: 20px auto;
-    }
-    
-    a {
-        text-decoration: none;
-        color: #aaa;
-        font-size: 15px;
-    }
-    
-    a:hover {
-        color: coral;
-    }
-    
-    .el-button {
-        width: 80%;
-        margin-left: -50px;
-    }
+  }
+}
 </style>

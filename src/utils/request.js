@@ -3,12 +3,13 @@ import store from '@/store'
 // 根据环境不同引入不同api地址
 import {baseApi} from '@/config'
 import {isEmpty} from "element-ui/src/utils/util";
-import {Message,MessageBox} from "element-ui";
+import {Message, MessageBox} from "element-ui";
+import router from "@/router";
 // create an axios instance
 const service = axios.create({
     baseURL: baseApi, // url = base api url + request url
     withCredentials: true, // send cookies when cross-domain requests
-    timeout: 5000 // request timeout
+    timeout: 10000 // request timeout
 })
 
 // request拦截器 request interceptor
@@ -30,8 +31,7 @@ service.interceptors.response.use(
             //更新浏览器中的token
             let token = response.headers['x-token'];
             if (!isEmpty(token) && token !== store.getters.token) {
-                console.log('更新token');
-                store.commit("setToken", {token: response.headers['x-token']});
+                store.commit("user/SET_USER_TOKEN", {token: response.headers['x-token']});
             }
             const res = response.data
             if (res.status && res.status !== 200) {
@@ -47,9 +47,11 @@ service.interceptors.response.use(
                         cancelButtonText: '取消',
                         type: 'warning'
                     }).then(() => {
-                        //清除token，跳转登录界面
-                        store.commit('delToken')
-                        location.replace("/login")
+                        store.dispatch("user/logout").then(() => {
+                            router.push({name: 'Login'});
+                        }).catch((eee) => {
+                            console.log(eee)
+                        });
                     })
                 }
                 return Promise.reject(res.msg || 'error')
@@ -68,4 +70,18 @@ service.interceptors.response.use(
         }
 )
 
-export default service
+/**
+ * 封装接口请求方法
+ * @param url 域名后需补齐的接口地址
+ * @param method 接口请求方式
+ * @param data data下的其他数据体
+ */
+const request = (url, method, data) => {
+    return service({
+        url,
+        method,
+        data
+    })
+}
+
+export default request

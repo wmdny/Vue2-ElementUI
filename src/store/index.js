@@ -1,34 +1,24 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import getters from './getters'
+import user from './modules/user'
+import permission from './modules/permission'
+import setting from './modules/setting'
+import tagsView from './modules/tagsView'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-    state: {
-        count: 0,
-        token: localStorage.getItem('TOKEN') ? localStorage.getItem('TOKEN') : ''
-    },
-    getters: {
-        count(state) {
-            return state.count
-        },
-        token(state) {
-            return state.token
-        }
-    },
-    mutations: {
-        addCount(state, num) {
-            state.count += num
-        },
-        setToken(state, user) {
-            state.token = user.token;
-            localStorage.setItem("TOKEN",user.token);
-        },
-        delToken(state){
-            state.token='';
-            localStorage.removeItem("TOKEN");
-        }
-    },
-    actions: {
-    }
+  state: {
+  },
+  mutations: {
+  },
+  actions: {
+  },
+  getters,
+  modules: {
+    user,
+    permission,
+    setting,
+    tagsView
+  }
 })

@@ -28,3 +28,18 @@ npm run lint
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 
+### 注意
+```
+node版本太高会导致部分依赖安装冲突  
+安装node-sass报错Python环境 : https://blog.csdn.net/cathei/article/details/103195400
+Error: Node Sass version 6.0.1 is incompatible with ^4.0.0.: https://blog.csdn.net/qq_45678613/article/details/120612633    
+```
+
+正常运行环境:  
+node: [12.18.3]()  
+npm: [8.5.3]()  
+vue: [2.6.14]()  
+vuex: [3.6.2]()  
+
+
+
