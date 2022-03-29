@@ -42,9 +42,9 @@
       </div>
 </template>
 <script>
-import {apiGetList,apiDel} from '@/api/list'
+import {apiGetList,apiDel} from '@/api/system/role'
 export default {
-  name:'List1',
+  name:'Role',
   components: {},
   data () {
     return {
@@ -63,18 +63,18 @@ export default {
   methods:{
     getList(){
       this.loading = true;
-      apiGetList(this.param).then(res => {
-        this.totalCount = res.body.count;
-        this.list =res.body.list;
+      apiGetList(this.param).then(data => {
+        this.totalCount = data.data.count;
+        this.list =data.data.list;
       }).finally(() => {
         this.loading = false;
       })
     },
     detail(id){
-      this.$router.push({name:'ListDetail',params:{id}})
+      this.$router.push({name:'RoleDetail',params:{id}})
     },
     edit(id){
-      this.$router.push({name:'ListEdit',params:{id}})
+      this.$router.push({name:'RoleEdit',params:{id}})
     },
     del(id){
       apiDel({id}).then(() => {
