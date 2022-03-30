@@ -24,7 +24,7 @@
   </div>
 </template>
 <script>
-import {apiChangePassword} from '@/api/system/user'
+import {apiChangePassword} from '@/api/user'
 export default {
   name:'ChangePassword',
   components: {},

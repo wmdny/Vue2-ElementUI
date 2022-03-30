@@ -16,9 +16,9 @@
   </div>
 </template>
 <script>
-import {apiGetDetail,apiUpdate} from '@/api/system/user'
+import {apiGetDetail,apiUpdate} from '@/api/list'
 export default {
-  name:'UserEdit',
+  name:'ListEdit',
   components: {},
   props:{
     id:{
@@ -50,8 +50,8 @@ export default {
   },
   created(){
     // 获取详情
-    apiGetDetail({id:this.id}).then(data => {
-      this.param = data.data||{}
+    apiGetDetail({id:this.id}).then(res => {
+      this.param = res.body.data||{}
     })
   },
   methods:{
@@ -59,9 +59,9 @@ export default {
     async goBack(){
       await this.$store.commit('tagsView/DELETE_CACHE_VIEW',this.$route.name)
       await this.$store.commit('tagsView/DELETE_VISITED_VIEW',this.$route.name)
-      await this.$store.commit('tagsView/DELETE_CACHE_VIEW','User')
-      await this.$store.commit('tagsView/DELETE_VISITED_VIEW','User')
-      this.$router.push({name:'User'})
+      await this.$store.commit('tagsView/DELETE_CACHE_VIEW','List1')
+      await this.$store.commit('tagsView/DELETE_VISITED_VIEW','List1')
+      this.$router.push({name:'List1'})
     },
     // 编辑
     edit(){

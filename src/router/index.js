@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import Layout from '@/Layout/index.vue'
-import system from './modules/system'
+import list from './modules/list'
 import personCenter from './modules/personCenter'
 import store from '@/store'
 Vue.use(VueRouter)
@@ -38,7 +38,7 @@ export const permissionRoutes = [
             }
         ]
     },
-    system,
+    list,
     personCenter,
     {
         path: '*',

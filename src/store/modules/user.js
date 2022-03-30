@@ -1,4 +1,4 @@
-import {apiLogin} from '@/api/system/user'
+import {apiLogin} from '@/api/user'
 export default {
     namespaced: true,
     state: {

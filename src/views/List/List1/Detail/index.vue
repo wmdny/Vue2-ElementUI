@@ -15,9 +15,9 @@
   </div>
 </template>
 <script>
-import {apiGetDetail} from '@/api/system/role'
+import {apiGetDetail} from '@/api/list'
 export default {
-  name:'RoleDetail',
+  name:'ListDetail',
   components: {},
   props:{
     id:{
@@ -36,14 +36,14 @@ export default {
   },
   created(){
     // 获取详情
-    apiGetDetail({id:this.id}).then((data) => {
-      this.info = data.data||{}
+    apiGetDetail({id:this.id}).then(res => {
+      this.info = res.body.data||{}
     })
   },
   methods:{
     // 返回
     goBack(){
-      this.$router.replace({name:'Role'})
+      this.$router.replace({name:'List1'})
       this.$store.commit('tagsView/DELETE_CACHE_VIEW',this.$route.name)
       this.$store.commit('tagsView/DELETE_VISITED_VIEW',this.$route.name)
     }
