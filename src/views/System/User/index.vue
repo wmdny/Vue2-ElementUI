@@ -20,7 +20,16 @@
         <el-table-column
           prop="address"
           label="地址"
-          align='center'>
+          align='center'
+          width='300'>
+        </el-table-column>
+        <el-table-column
+          label="操作">
+          <template slot-scope="scope">
+            <el-button type='success' size='small' @click="detail(scope.row.id)">详情</el-button>
+            <el-button type='primary' size='small' @click="edit(scope.row.id)">编辑</el-button>
+            <el-button type='danger' size='small' @click="del(scope.row.id)">删除</el-button>
+          </template>
         </el-table-column>
       </el-table>
       <el-pagination
@@ -33,9 +42,9 @@
       </div>
 </template>
 <script>
-import {apiGetList} from '@/api/list'
+import {apiGetList,apiDel} from '@/api/system/user'
 export default {
-  name:'List2',
+  name:'User',
   components: {},
   data () {
     return {
@@ -54,13 +63,25 @@ export default {
   methods:{
     getList(){
       this.loading = true;
-      apiGetList(this.param).then(res => {
-        this.totalCount = res.body.count;
-        this.list =res.body.list;
+      apiGetList(this.param).then(data => {
+        this.totalCount = data.data.count;
+        this.list =data.data.list;
       }).finally(() => {
         this.loading = false;
       })
     },
+    detail(id){
+      this.$router.push({name:'UserDetail',params:{id}})
+    },
+    edit(id){
+      this.$router.push({name:'UserEdit',params:{id}})
+    },
+    del(id){
+      apiDel({id}).then(() => {
+        this.$message.success('删除成功！')
+        this.getList();
+      })
+    }
   }
 }
 </script>
