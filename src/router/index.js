@@ -1,50 +1,24 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
-import Layout from '@/Layout/index.vue'
-import system from './modules/system'
-import personCenter from './modules/personCenter'
 import store from '@/store'
+
+
 Vue.use(VueRouter)
 
 export const routes = [
     {
         path: '/login',
         name: 'Login',
-        hidden: true,
-        meta: {notNeedAuth: true},
+        hidden:true,
+        meta: { notNeedAuth: true },
         component: () => import('@/views/Login.vue')
     },
     {
         path: "/404",
         name: "NotFund",
         hidden: true,
-        meta: {notNeedAuth: true},
+        meta: { notNeedAuth: true },
         component: () => import("@/views/Error/404.vue"),
-    }
-]
-export const permissionRoutes = [
-    {
-        path: '/',
-        name: 'Root',
-        redirect: '/home',
-        component: Layout,
-        children: [
-            {
-                path: '/home',
-                name: "Home",
-                meta: {title: '首页', icon: 'el-icon-s-home', needCache: true, fixed: true},
-                component: () => import('@/views/Home.vue')
-            }
-        ]
-    },
-    system,
-    personCenter,
-    {
-        path: '*',
-        name: 'Error',
-        hidden: true,
-        redirect: "/404",
     }
 ]
 
@@ -57,22 +31,19 @@ const router = new VueRouter({
 // 重置路由
 export function resetRouter() {
     const newRouter = new VueRouter({
-        scrollBehavior: () => ({y: 0}),
+        scrollBehavior: () => ({ y: 0 }),
         routes: routes
     })
     router.matcher = newRouter.matcher
 }
 
 // 路由前置守卫
-router.beforeEach((to, from, next) => {
+router.beforeEach((to,from,next) =>{
     // 免登录白名单
-    const whiteList = ['Login', 'NotFund'];
+    const whiteList = ['Login','NotFund']
     // 如果未登录 并且目标路由不在白名单
-    if (!store.getters.token && whiteList.indexOf(to.name) === -1) {
-        next({name: 'Login'});
-    } else {
-        next()
-    }
+    if(!store.getters.userInfo.userId&&whiteList.indexOf(to.name)===-1) next({name:'Login'})
+    else next()
 })
 
 // 路由后置守卫

@@ -32,8 +32,7 @@ export default {
     },
     // 添加访问过的路由
     ADD_VISITED_VIEW(state, view) {
-      if(!state.visitedViews.find(item => item.name===view.name)) state.visitedViews.push(view);
-      
+      if(view.name&&!state.visitedViews.find(item => item.name===view.name)) state.visitedViews.push(view);
     },
     // 删除访问过的路由
     DELETE_VISITED_VIEW(state, name) {

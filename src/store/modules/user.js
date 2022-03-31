@@ -7,7 +7,6 @@ export default {
             userName: '',
             avatar: '',
             token: localStorage.getItem("USER_TOKEN")
-            
         },
     },
     mutations: {
@@ -15,7 +14,7 @@ export default {
             state.userInfo.userId = data.userId;
             state.userInfo.userName = data.userName;
             state.userInfo.avatar = data.avatar;
-            // state.userInfo.token = data.token;
+            state.userInfo.token = data.token;
             console.log('更新user:', state.userInfo);
         },
         SET_USER_TOKEN(state, data) {
@@ -26,12 +25,12 @@ export default {
     },
     actions: {
         // 登录
-        login({commit, dispatch}, data) {
+        login({commit,dispatch}, data) {
             return new Promise((resolve, reject) => {
                 apiLogin(data).then(async data => {
                     commit('SET_USER_INFO', data.user);
                     // 动态添加可访问的路由
-                    await dispatch('permission/handleRoutes', null, {root: true})
+                    await dispatch('permission/handleRoutes',null,{root:true})
                     resolve('success')
                 }).catch((err) => {
                     console.log(err);
@@ -40,7 +39,7 @@ export default {
             })
         },
         // 退出登录
-        logout({commit, dispatch}) {
+        logout({commit,dispatch}) {
             return new Promise((resolve) => {
                         async function logout() {
                             commit('SET_USER_INFO', {})

@@ -10,6 +10,7 @@ import 'element-ui/lib/theme-chalk/index.css'
 // 如果是开发环境，引入mock
 require('@/mock/index')
 Vue.config.productionTip = false
+Vue.config.devtools = true
 
 Vue.use(ElementUi, {size: 'small', zIndex: 3000})
 

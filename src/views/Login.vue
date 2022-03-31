@@ -54,6 +54,7 @@ export default {
           this.loginLoading = true;
           this.$store.dispatch("user/login", this.param).then(() => {
             this.loginLoading = false;
+            console.log("跳转");
             this.$router.push({name: "Home"});
           }).finally(() => {
             this.loginLoading = false;

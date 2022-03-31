@@ -74,7 +74,7 @@ Mock.mock('/api/user/login', 'post', (req) => {
                 userId: '001',
                 userName: data.userName,
                 avatar: 'https://img0.baidu.com/it/u=3233551726,336273710&fm=26&fmt=auto&gp=0.jpg',
-                token: ''
+                token: 'xiixixixi'
             },
             msg: '登录成功'
         };
