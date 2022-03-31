@@ -67,12 +67,12 @@ let listData = [
 // 登录
 Mock.mock('/api/user/login', 'post', (req) => {
     const data = JSON.parse(req.body);
-    if (data.userName === 'xxs' && data.password === '123') {
+    if (data.loginName === 'xxs' && data.password === '123') {
         return {
             status: 200,
             user: {
                 userId: '001',
-                userName: data.userName,
+                loginName: data.loginName,
                 avatar: 'https://img0.baidu.com/it/u=3233551726,336273710&fm=26&fmt=auto&gp=0.jpg',
                 token: 'xiixixixi'
             },

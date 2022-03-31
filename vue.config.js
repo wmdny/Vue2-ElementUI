@@ -19,7 +19,7 @@ module.exports = {
         hotOnly: false,
         //设置代理
         // 配置不同的后台API地址
-     /*   proxy: {
+        proxy: {
             '/api': {
                 target: 'http://localhost:8888',  // 后台接口
                 changeOrigin: true,  //是否跨域
@@ -27,7 +27,7 @@ module.exports = {
                     '^/api': ''
                 }
             }
-        }*/
+        }
     },
     configureWebpack: {
         // provide the app's title in webpack's name field, so that

@@ -8,7 +8,7 @@ import ElementUi from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
 // 如果是开发环境，引入mock
-require('@/mock/index')
+// require('@/mock/index')
 Vue.config.productionTip = false
 Vue.config.devtools = true
 

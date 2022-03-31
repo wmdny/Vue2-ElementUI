@@ -3,9 +3,9 @@
     <div class="inner_box">
       <div class="title c_fff bold t_center">系统登录</div>
       <el-form ref="form" :model="param" :rules="rules">
-        <el-form-item prop="userName">
+        <el-form-item prop="loginName">
           <el-input
-            v-model="param.userName"
+            v-model="param.loginName"
             placeholder="用户名"
             prefix-icon="el-icon-user"
           />
@@ -31,16 +31,17 @@
   </div>
 </template>
 <script>
+  import MD5 from 'js-md5';
 export default {
   name: "Login",
   data() {
     return {
       param: {
-        userName: "",
+        loginName: "",
         password: "",
       },
       rules: {
-        userName: [{ required: true, message: "请输入用户名", trigger: blur }],
+        loginName: [{ required: true, message: "请输入用户名", trigger: blur }],
         password: [{ required: true, message: "请输入密码", trigger: blur }],
       },
       loginLoading: false,
@@ -52,7 +53,9 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.loginLoading = true;
-          this.$store.dispatch("user/login", this.param).then(() => {
+          let form = Object.assign({}, this.param);
+          form.password = MD5(form.password);
+          this.$store.dispatch("user/login", form).then(() => {
             this.loginLoading = false;
             console.log("跳转");
             this.$router.push({name: "Home"});

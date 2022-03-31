@@ -1,6 +1,6 @@
 import router, {routes,  resetRouter} from "@/router";
 import Layout from "@/Layout/index";
-import {userPermission} from "@/api/system/permission";
+import {userPermission} from "@/api/system/menu";
 
 function initPermission() {
     return [
@@ -23,6 +23,28 @@ function initPermission() {
             name: 'Error',
             hidden: true,
             redirect: "/404",
+        },{
+            path: '/person-center',
+            name: 'PersonCenter',
+            meta:{title:'个人中心',needCache:true},
+            hidden:true,
+            component: Layout,
+            children:[
+                {
+                    path:'user-info',
+                    name:'UserInfo',
+                    hidden:true,
+                    meta:{title:'个人中心',needCache:true},
+                    component: () => import('@/views/PersonCenter/index.vue')
+                },
+                {
+                    path:'change-password',
+                    name:'ChangePassword',
+                    hidden:true,
+                    meta:{title:'修改密码',needCache:true},
+                    component: () => import('@/views/PersonCenter/ChangePassword.vue')
+                },
+            ],
         }
     ];
 }

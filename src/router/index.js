@@ -43,7 +43,15 @@ router.beforeEach((to,from,next) =>{
     const whiteList = ['Login','NotFund']
     // 如果未登录 并且目标路由不在白名单
     if(!store.getters.userInfo.userId&&whiteList.indexOf(to.name)===-1) next({name:'Login'})
-    else next()
+    else {
+        //已登陆或在白名单内
+        if (to.name && !router.getRoutes().map(i => i.name).includes(to.name)) {
+            //如果不存在此路由，禁止跳转
+            next({name: 'Error'});
+        } else {
+            next();
+        }
+    }
 })
 
 // 路由后置守卫

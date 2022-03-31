@@ -64,7 +64,7 @@ export default {
     getList(){
       this.loading = true;
       apiGetList(this.param).then(data => {
-        this.totalCount = data.data.count;
+        this.totalCount = data.data.total;
         this.list =data.data.list;
       }).finally(() => {
         this.loading = false;

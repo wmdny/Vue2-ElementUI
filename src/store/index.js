@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import getters from './getters'
 import user from './modules/user'
-import permission from './modules/permission'
+import permission from './modules/menu'
 import setting from './modules/setting'
 import tagsView from './modules/tagsView'
 Vue.use(Vuex)

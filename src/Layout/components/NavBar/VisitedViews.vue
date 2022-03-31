@@ -34,6 +34,7 @@
   </div>
 </template>
 <script lang="ts">
+
 export default {
   name: "",
   data(){
@@ -84,6 +85,9 @@ export default {
         "tagsView/DELETE_CACHE_VIEW",
         this.mouseRightView.name
       );
+      if (this.$route.params) {
+        this.mouseRightView.params = this.$route.params;
+      }
       if (this.mouseRightView.name === this.$route.name) {
         await this.$router.push({ name: "NotFund" });
         this.$router.replace(this.mouseRightView);

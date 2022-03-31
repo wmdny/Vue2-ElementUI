@@ -4,17 +4,14 @@ export default {
     state: {
         userInfo: {
             userId: '',
-            userName: '',
+            loginName: '',
             avatar: '',
             token: localStorage.getItem("USER_TOKEN")
         },
     },
     mutations: {
         SET_USER_INFO(state, data = {}) {
-            state.userInfo.userId = data.userId;
-            state.userInfo.userName = data.userName;
-            state.userInfo.avatar = data.avatar;
-            state.userInfo.token = data.token;
+            state.userInfo = Object.assign({}, data);
             console.log('更新user:', state.userInfo);
         },
         SET_USER_TOKEN(state, data) {
